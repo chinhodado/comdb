@@ -31,50 +31,50 @@
 						<div class="form-group">
 							<label for="cpuname" class="col-lg-3 control-label">CPU name</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="cpuname" placeholder="" required>
+								<input type="text" class="form-control" name="cpuname" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="technology" class="col-lg-3 control-label">Technology</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="technology" placeholder="22nm? 32nm? ..." required>
+								<input type="text" class="form-control" name="technology" placeholder="22nm? 32nm? ..." required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="clock" class="col-lg-3 control-label">Clock</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="clock" placeholder="" required>
+								<input type="text" class="form-control" name="clock" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="l1cache" class="col-lg-3 control-label">L1 cache</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="l1cache" placeholder="" required>
+								<input type="text" class="form-control" name="l1cache" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="l3cache" class="col-lg-3 control-label">L3 cache</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="l3cache" placeholder="">
+								<input type="text" class="form-control" name="l3cache" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="numcore" class="col-lg-3 control-label">Core</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="numcore" placeholder="number of core" required>
+								<input type="text" class="form-control" name="numcore" placeholder="number of core" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="instructions" class="col-lg-3 control-label">Instructions</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="instructions" placeholder="" required>
+								<input type="text" class="form-control" name="instructions" placeholder="" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-lg-3"></div>
 							<div class="col-lg-8">
-								<button type="submit" class="btn btn-default">Add</button>
+								<button type="submit" class="btn btn-default" name="submit">Add</button>
 							</div>
 						</div>
 						
@@ -84,43 +84,43 @@
 						<div class="form-group">
 							<label for="codename" class="col-lg-3 control-label">Codename</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="codename" placeholder="" required>
+								<input type="text" class="form-control" name="codename" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="package" class="col-lg-3 control-label">Package</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="package" placeholder="socket?" required>
+								<input type="text" class="form-control" name="package" placeholder="socket?" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="clockturbo" class="col-lg-3 control-label">Clock turbo</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="clockturbo" placeholder="">
+								<input type="text" class="form-control" name="clockturbo" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="l2cache" class="col-lg-3 control-label">L2 cache</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="l2cache" placeholder="" required>
+								<input type="text" class="form-control" name="l2cache" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="multiplier" class="col-lg-3 control-label">Multiplier</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="multiplier" placeholder="">
+								<input type="text" class="form-control" name="multiplier" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="numthread" class="col-lg-3 control-label">Thread</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="numthread" placeholder="number of thread" required>
+								<input type="text" class="form-control" name="numthread" placeholder="number of thread" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkscore" class="col-lg-3 control-label">Passmark score</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="passmarkscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmarkscore" placeholder="" required>
 							</div>
 						</div>
 
@@ -133,7 +133,7 @@
 	</div>
 
 			<?php
-			if (array_key_exists('cpuname', $_POST) && array_key_exists('technology', $_POST) && array_key_exists('package', $_POST) && array_key_exists('clock', $_POST) && array_key_exists('l1cache', $_POST) && array_key_exists('l2cache', $_POST) && array_key_exists('numcore', $_POST) && array_key_exists('numthread', $_POST) && array_key_exists('codename', $_POST) && array_key_exists('instructions', $_POST))
+			if (array_key_exists('submit', $_POST))
 			{
 				include 'dbConnection.php';
 

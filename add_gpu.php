@@ -30,27 +30,26 @@
 						<div class="form-group">
 							<label for="gpuname" class="col-lg-4 control-label">GPU name</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="gpuname" placeholder="" required>
+								<input type="text" class="form-control" id="gpuname" name="gpuname" placeholder="" required>
 							</div>
 						</div>
-
 
 						<div class="form-group">
 							<label for="bandwidth" class="col-lg-4 control-label">Bandwidth</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="bandwidth" placeholder="">
+								<input type="text" class="form-control" id="bandwidth"  name="bandwidth" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkscore2D" class="col-lg-4 control-label">Passmark score 2D</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="passmarkscore2D" placeholder="" required>
+								<input type="text" class="form-control" id="passmarkscore2D" name="passmarkscore2D" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-4"></div>
 							<div class="col-lg-8">
-								
+								<input type="submit" name='submit' value='Add' class="btn btn-default">
 							</div>
 						</div>
 						
@@ -60,30 +59,30 @@
 						<div class="form-group">
 							<label for="gpuclock" class="col-lg-4 control-label">GPU clock</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="gpuclock" placeholder="">
+								<input type="text" class="form-control" id="gpuclock" name="gpuclock" placeholder="">
 							</div>
 						</div>						
 						<div class="form-group">
 							<label for="memclock" class="col-lg-4 control-label">Memory clock</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="memclock" placeholder="">
+								<input type="text" class="form-control" id="memclock" name="memclock" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkscore3D" class="col-lg-4 control-label">Passmark score 3D</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="passmarkscore3D" placeholder="" required>
+								<input type="text" class="form-control" id="passmarkscore3D" name="passmarkscore3D" placeholder="" required>
 							</div>
 						</div>
 					</div>
 				</div>
-				<input type="submit" name='submit' value='Add' class="btn btn-default">
+				
 				
 		</form>
 	</div>
 
 			<?php
-			if (array_key_exists('gpuname', $_POST) && array_key_exists('passmarkscore2D', $_POST) && array_key_exists('passmarkscore3D', $_POST))
+			if (array_key_exists('submit', $_POST))
 			{
 				include 'dbConnection.php';
 
@@ -92,7 +91,7 @@
 
 				// Performing SQL query
 				$query = "INSERT INTO comdb.gpu(name, passmarkscore2D, passmarkscore3D, gpuclock, bandwidth, memclock) VALUES('";
-					$query .= $_POST['name'];
+					$query .= $_POST['gpuname'];
 					$query .= "', ";
 					$query .= $_POST['passmarkscore2D'];
 					$query .= ", ";

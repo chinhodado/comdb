@@ -30,32 +30,32 @@
 						<div class="form-group">
 							<label for="name" class="col-lg-3 control-label">Computer name</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="name" placeholder="" required>
+								<input type="text" class="form-control" name="name" placeholder="" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="ram" class="col-lg-3 control-label">RAM</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="ram" placeholder="" required>
+								<input type="text" class="form-control" name="ram" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkdiskscore" class="col-lg-3 control-label">Passmark disk score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="passmarkdiskscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmarkdiskscore" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkramscore" class="col-lg-3 control-label">Passmark RAM score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="passmarkramscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmarkramscore" placeholder="" required>
 							</div>
 						</div>		
 						<div class="form-group">
 							<label for="passmarktotalscore" class="col-lg-3 control-label">Passmark total score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="passmarktotalscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmarktotalscore" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -81,13 +81,13 @@
 						<div class="form-group">
 							<label for="model" class="col-lg-1 control-label">Model</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="model" placeholder="">
+								<input type="text" class="form-control" name="model" placeholder="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="psu" class="col-lg-1 control-label">PSU</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" id="psu" placeholder="">
+								<input type="text" class="form-control" name="psu" placeholder="">
 							</div>
 						</div>						
 					</div>
@@ -95,7 +95,7 @@
 				
 				<div class="form-group">
 					<div class="col-lg-offset-5 col-lg-7">
-					  <button type="submit" class="btn btn-default">Add</button>
+					  <button type="submit" class="btn btn-default" name='submit'>Add</button>
 					</div>
 				</div>
 
@@ -103,10 +103,8 @@
 		</form>
 	
 		<?php
-		if (array_key_exists('name', $_POST) && array_key_exists('ram', $_POST) && array_key_exists('cpuid', $_POST))
+		if (array_key_exists('submit', $_POST))
 		{
-			include 'dbConnection.php';
-
 			// Establish the connection
 			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 
