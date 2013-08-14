@@ -25,6 +25,14 @@
 			</ul>
 		</li>
 
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">GPU <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="all_gpu.php">GPU list</a></li>
+        <li><a href="add_gpu.php">Add new GPU</a></li>
+      </ul>
+    </li>
+
         <li>
           <a href="chart.php">Chart</a>
         </li>

@@ -40,11 +40,31 @@
 	}
 
 	echo "<table id='hor-minimalist-b'>";
+	echo "<tr>
+		<td>Name</td>
+		<td>Code name</td>
+		<td>Technology</td>
+		<td>Package</td>
+		<td>Clock</td>
+		<td>Clock turbo</td>
+		<td>L1 Cache</td>
+		<td>L2 Cache</td>
+		<td>L3 Cache</td>
+		
+		<td>Core</td>
+		<td>Thread</td>
+
+		<td>Multiplier</td>
+		<td>Instructions</td>
+
+		<td>Passmark score</td>
+	</tr>";
 
 	foreach ($cpu_array as $temp){
 		echo "<tr>";
-		echo "<td>".$temp->cpuid."</td>";
+		//echo "<td>".$temp->cpuid."</td>";
 		echo "<td>".$temp->name."</td>";
+		echo "<td>".$temp->codename."</td>";
 		echo "<td>".$temp->technology."</td>";
 		echo "<td>".$temp->package."</td>";
 		echo "<td>".$temp->clock."</td>";
@@ -52,12 +72,15 @@
 		echo "<td>".$temp->l1cache."</td>";
 		echo "<td>".$temp->l2cache."</td>";
 		echo "<td>".$temp->l3cache."</td>";
+
 		echo "<td>".$temp->numcore."</td>";
-		echo "<td>".$temp->passmarkscore."</td>";
-		echo "<td>".$temp->codename."</td>";
+		echo "<td>".$temp->numthread."</td>";		
+		
 		echo "<td>".$temp->instructions."</td>";
 		echo "<td>".$temp->multiplier."</td>";
-		echo "<td>".$temp->numthread."</td>";
+
+		echo "<td>".$temp->passmarkscore."</td>";
+
 		echo "</tr>";
 	}
 
@@ -70,28 +93,6 @@
 	// Closing connection
 	pg_close($dbconn);
 	?>
-
-	<script>//reverse the table
-		$(document).ready(function(){
-			$("table").each(function() {
-				var $this = $(this);
-				var newrows = [];
-				$this.find("tr").each(function(){
-					var i = 0;
-					$(this).find("td").each(function(){
-						i++;
-						if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-						newrows[i].append($(this));
-					});
-				});
-				$this.find("tr").remove();
-				$.each(newrows, function(){
-					$this.append(this);
-				});
-			});
-			return false;
-		});
-	</script>
 
 </body>
 </html>
