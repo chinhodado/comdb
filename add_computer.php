@@ -75,6 +75,21 @@
 								?>
 							</div>
 						</div>
+						<div class="form-group">
+							<label for="cpuid" class="col-lg-3 control-label">GPU</label>
+							<div class="col-lg-5">
+								<?php
+								$query = "SELECT * FROM comdb.gpu";
+								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+								echo "<select name='gpuid' class='form-control'>";
+								// echo "<option value='0'></option>";
+								while ($line2 = pg_fetch_array($result)) {
+									echo "<option value=".$line2[0].">".$line2[1]."</option>";
+								}
+								echo "</select><br/>";
+								?>
+							</div>
+						</div>							
 					</div>
 
 					<div class="col-lg-6">
