@@ -13,7 +13,8 @@ if (array_key_exists('submit', $_POST))
 										passmarkdiskscore='".$_POST['passmarkdiskscore']."', 
 										passmarkramscore='".$_POST['passmarkramscore']."', 
 										passmarktotalscore='".$_POST['passmarktotalscore']."', 
-										cpuid='".$_POST['cpuid']."' 
+										cpuid='".$_POST['cpuid']."',
+										gpuid='".$_POST['gpuid']."'
 			WHERE computerid={$_POST['computerid']}";
 
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
