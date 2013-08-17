@@ -1,5 +1,5 @@
 <?php
-if (array_key_exists('name', $_POST) && array_key_exists('ram', $_POST) && array_key_exists('cpuid', $_POST))
+if (array_key_exists('submit', $_POST))
 {
 	include 'dbConnection.php';
 	// Establish the connection
@@ -27,6 +27,6 @@ if (array_key_exists('name', $_POST) && array_key_exists('ram', $_POST) && array
 	pg_close($dbconn);
 
 	//return to allcom page
-	header( 'Location: allcom.php' ) ;
+	header( 'Location: all_computer.php' ) ;
 }
 ?>
