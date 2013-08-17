@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Add new computer</title>
+	
+	<link href="css/table_style.css" rel="stylesheet" />
+	<link href="css/bootstrap.css" rel="stylesheet">
+
+	<script src="js/jquery-1.9.1.js"></script> 
+	<script src="js/jquery.tablesorter.js"></script>
+	<script src="js/bootstrap.js"></script>
+
+</head>
+<body>
+	<?php include 'topbar.php'; ?>
+	<div class="jumbotron">
+
+		<!-- HEADER -->
+		<div>		
+			<h1 style="font-size:38px;">Add new computer</h1>
+			<h5>Enter the computer's information below</h5>			
+		</div>	
+	
+		<!-- MAIN CONTENT -->
+		<form action="" method="POST" style="font-size:14px;line-height:20px;" class="form-horizontal">		
+			<fieldset>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="name" class="col-lg-3 control-label">Computer name</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="name" placeholder="" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="ram" class="col-lg-3 control-label">RAM</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="ram" placeholder="" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="passmarkdiskscore" class="col-lg-3 control-label">Passmark disk score</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="passmarkdiskscore" placeholder="" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="passmarkramscore" class="col-lg-3 control-label">Passmark RAM score</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="passmarkramscore" placeholder="" required>
+							</div>
+						</div>		
+						<div class="form-group">
+							<label for="passmarktotalscore" class="col-lg-3 control-label">Passmark total score</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="passmarktotalscore" placeholder="" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="cpuid" class="col-lg-3 control-label">CPU</label>
+							<div class="col-lg-5">
+								<?php
+								include 'dbConnection.php';
+								$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+								$query = "SELECT * FROM comdb.cpu";
+								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+								echo "<select name='cpuid' id='cpuid' class='form-control'>";
+								while ($line = pg_fetch_array($result)) {
+									echo "<option value=".$line[0].">".$line[1]."</option>";
+								}
+								echo "</select><br/>";
+								?>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="model" class="col-lg-1 control-label">Model</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="model" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="psu" class="col-lg-1 control-label">PSU</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="psu" placeholder="">
+							</div>
+						</div>						
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-offset-5 col-lg-7">
+					  <button type="submit" class="btn btn-default">Add</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	
+		<?php
+		if (array_key_exists('name', $_POST) && array_key_exists('ram', $_POST) && array_key_exists('cpuid', $_POST))
+		{
+			include 'dbConnection.php';
+
+			// Establish the connection
+			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+
+			// Performing SQL query
+			$query = "INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid) VALUES('";
+			$query .= $_POST['name'];
+			$query .= "', '";
+			$query .= $_POST['model'];
+			$query .= "', '";
+			$query .= $_POST['ram'];
+			$query .= "', '";
+			$query .= $_POST['psu'];
+			$query .= "', '";
+			$query .= $_POST['passmarkdiskscore'];
+			$query .= "', '";
+			$query .= $_POST['passmarkramscore'];
+			$query .= "', '";
+			$query .= $_POST['passmarktotalscore'];
+			$query .= "', '";
+			$query .= $_POST['cpuid'];
+			$query .= "');";
+
+			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+			echo "<p>Inserted ".$_POST['name']." into the database</p>";
+
+			// Free resultset
+			pg_free_result($result);
+
+			// Closing connection
+			pg_close($dbconn);
+		}
+		?>
+		
+	</div>
+</body>
+</html>
