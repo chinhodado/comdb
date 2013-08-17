@@ -74,21 +74,8 @@
 			<td></td>
 			<td>Model</td>
 			<td>RAM</td>
-
-			<td style='background:#f0b746;'>CPU</td>
-			<td>CPU name</td>
-			<td>Code name</td>
-			<td>Technology</td>
-			<td>Package</td>
-			<td>Clock</td>
-			<td>Clock turbo</td>
-			<td>L1 Cache</td>
-			<td>L2 Cache</td>
-			<td>L3 Cache</td>
-			<td>Core</td>
-			<td>Thread</td>
-			<td>Multiplier</td>
-			<td>Instructions</td>
+			<td>CPU</td>
+			<td>Passmark total score</td>
 		</tr>";
 
 	foreach ($computer_array as $temp){	//number of computer
@@ -98,27 +85,27 @@
 		echo "<td>".$temp->model."</td>";
 		echo "<td>".$temp->ram."</td>";
 
-		echo "<td style='background:#f0b746;'></td>";
+		// echo "<td style='background:#f0b746;'></td>";
 		echo "<td>".$cpu_array[$temp->cpuid]->name."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->codename."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->technology."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->package."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->clock."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->clockturbo."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->l1cache."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->l2cache."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->l3cache."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->numcore."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->numthread."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->multiplier."</td>";
-		echo "<td>".$cpu_array[$temp->cpuid]->instructions."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->codename."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->technology."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->package."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->clock."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->clockturbo."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->l1cache."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->l2cache."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->l3cache."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->numcore."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->numthread."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->multiplier."</td>";
+		// echo "<td>".$cpu_array[$temp->cpuid]->instructions."</td>";
 
 		//echo "<td>".$temp->gpuid."</td>";
 		
-		echo "<td>".$temp->psu."</td>";
+		// echo "<td>".$temp->psu."</td>";
 		//echo "<td>".$temp->passmarkdiskscore."</td>";		
 		//echo "<td>".$temp->passmarkramscore."</td>";		
-		//echo "<td>".$temp->passmarktotalscore."</td>";
+		echo "<td>".$temp->passmarktotalscore."</td>";
 		echo "</tr>";
 	}
 
@@ -132,25 +119,25 @@
 	?>
 
 	<script>//reverse the table
-		$(document).ready(function(){
-			$("table").each(function() {
-				var $this = $(this);
-				var newrows = [];
-				$this.find("tr").each(function(){
-					var i = 0;
-					$(this).find("td").each(function(){
-						i++;
-						if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-						newrows[i].append($(this));
-					});
-				});
-				$this.find("tr").remove();
-				$.each(newrows, function(){
-					$this.append(this);
-				});
-			});
-			return false;
-		});
+		// $(document).ready(function(){
+		// 	$("table").each(function() {
+		// 		var $this = $(this);
+		// 		var newrows = [];
+		// 		$this.find("tr").each(function(){
+		// 			var i = 0;
+		// 			$(this).find("td").each(function(){
+		// 				i++;
+		// 				if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+		// 				newrows[i].append($(this));
+		// 			});
+		// 		});
+		// 		$this.find("tr").remove();
+		// 		$.each(newrows, function(){
+		// 			$this.append(this);
+		// 		});
+		// 	});
+		// 	return false;
+		// });
 	</script>
 
 </body>
