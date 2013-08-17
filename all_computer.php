@@ -56,6 +56,20 @@
 	}
 
 	//////////////////////////////////////
+	// Fetch GPU list
+	//////////////////////////////////////
+
+	$query = "select * from comdb.gpu;";
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+	$gpu_array = array();
+
+	while ($line = pg_fetch_array($result)) {
+		$temp = new GPU($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6]);
+		$gpu_array[$line[0]] = $temp; 
+	}
+
+	//////////////////////////////////////
 	// Fetch computer list
 	//////////////////////////////////////
 
@@ -75,6 +89,7 @@
 			<td>Model</td>
 			<td>RAM</td>
 			<td>CPU</td>
+			<td>GPU</td>
 			<td>Passmark total score</td>
 		</tr>";
 
@@ -87,6 +102,7 @@
 
 		// echo "<td style='background:#f0b746;'></td>";
 		echo "<td>".$cpu_array[$temp->cpuid]->name."</td>";
+		echo "<td>".$gpu_array[$temp->gpuid]->name."</td>";
 		// echo "<td>".$cpu_array[$temp->cpuid]->codename."</td>";
 		// echo "<td>".$cpu_array[$temp->cpuid]->technology."</td>";
 		// echo "<td>".$cpu_array[$temp->cpuid]->package."</td>";
