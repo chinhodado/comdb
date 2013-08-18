@@ -124,7 +124,7 @@
 			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 
 			// Performing SQL query
-			$query = "INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid) VALUES('";
+			$query = "INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid, gpuid) VALUES('";
 			$query .= $_POST['name'];
 			$query .= "', '";
 			$query .= $_POST['model'];
@@ -140,6 +140,8 @@
 			$query .= $_POST['passmarktotalscore'];
 			$query .= "', '";
 			$query .= $_POST['cpuid'];
+			$query .= "', '";
+			$query .= $_POST['gpuid'];
 			$query .= "');";
 
 			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
