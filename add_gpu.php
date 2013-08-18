@@ -106,7 +106,7 @@
 
 					$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-					echo "<p>Inserted ".$_POST['gpuname']." into the database</p>";
+					echo "<p>Inserted ".$_POST['name']." into the database</p>";
 
 					// Free resultset
 					pg_free_result($result);
