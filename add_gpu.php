@@ -28,22 +28,22 @@
 
 					<div class="col-lg-4">
 						<div class="form-group">
-							<label for="gpuname" class="col-lg-4 control-label">GPU name</label>
+							<label for="name" class="col-lg-4 control-label">GPU name</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="gpuname" name="gpuname" placeholder="" required>
+								<input type="text" class="form-control" name="name" required>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="bandwidth" class="col-lg-4 control-label">Bandwidth</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="bandwidth"  name="bandwidth" placeholder="">
+								<input type="text" class="form-control" name="bandwidth" >
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkscore2D" class="col-lg-4 control-label">Passmark score 2D</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="passmarkscore2D" name="passmarkscore2D" placeholder="" required>
+								<input type="text" class="form-control" name="passmarkscore2D" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -59,19 +59,19 @@
 						<div class="form-group">
 							<label for="gpuclock" class="col-lg-4 control-label">GPU clock</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="gpuclock" name="gpuclock" placeholder="">
+								<input type="text" class="form-control" name="gpuclock">
 							</div>
 						</div>						
 						<div class="form-group">
 							<label for="memclock" class="col-lg-4 control-label">Memory clock</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="memclock" name="memclock" placeholder="">
+								<input type="text" class="form-control" name="memclock">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="passmarkscore3D" class="col-lg-4 control-label">Passmark score 3D</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" id="passmarkscore3D" name="passmarkscore3D" placeholder="" required>
+								<input type="text" class="form-control" name="passmarkscore3D" required>
 							</div>
 						</div>
 					</div>
@@ -91,7 +91,7 @@
 
 				// Performing SQL query
 				$query = "INSERT INTO comdb.gpu(name, passmarkscore2D, passmarkscore3D, gpuclock, bandwidth, memclock) VALUES('";
-					$query .= $_POST['gpuname'];
+					$query .= $_POST['name'];
 					$query .= "', ";
 					$query .= $_POST['passmarkscore2D'];
 					$query .= ", ";
