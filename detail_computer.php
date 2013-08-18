@@ -12,7 +12,7 @@
 	<script src="js/bootstrap.js"></script>
 	<script>
 	function change(event, name){
-		var image = document.getElementById('image');
+		var image = document.getElementById('mainimage');
 		pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("pointer_div").offsetLeft;
 		pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
 		if (pos_y>=32&&pos_y<=48) {
@@ -37,10 +37,10 @@
 <body style="padding-top: 50px;">
 	<?php include 'topbar.php'; ?>
 	<div style="height:410px;background-color:#162d42;">
-		<img style="float:right;" onclick="change(event, getParameterByName('name'))" id="image">
+		<img style="float:right;" onclick="change(event, getParameterByName('name'))" id="mainimage">
 
 		<script>
-			document.getElementById('image').setAttribute('src', 'images/'+ getParameterByName('name') + '/cpuz_1_cpu.jpg');
+			document.getElementById('mainimage').setAttribute('src', 'images/'+ getParameterByName('name') + '/cpuz_1_cpu.jpg');
 		</script>
 
 		<div style="color:#BBDAF9; padding-top: 50px; padding-left: 50px;">
@@ -54,8 +54,11 @@
 
 
 	<div style="height:auto;background-color:#162726;">
-		<img src="images/Tsubasa/gpuz.jpg">
+		<img id="gpuimage">
 	</div>
+	<script>
+		document.getElementById('gpuimage').setAttribute('src', 'images/'+ getParameterByName('name') + '/gpuz.jpg');
+	</script>
 
 </body>
 </html>
