@@ -10,21 +10,21 @@
 	<script src="js/jquery.tablesorter.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script>
-		function send(comid){
-			$.ajax({
-				type: 'POST',
-				dataType: 'html',
-				url: 'edit_computer.php',
-				data: {comid: comid},
-				success: function(data){
-					// Replace the whole body with the new HTML page
-					var newDoc = document.open('text/html', 'replace');
-					newDoc.write(data);
-					newDoc.close();
-				}
+		// function send(comid){
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		dataType: 'html',
+		// 		url: 'edit_computer.php',
+		// 		data: {comid: comid},
+		// 		success: function(data){
+		// 			// Replace the whole body with the new HTML page
+		// 			var newDoc = document.open('text/html', 'replace');
+		// 			newDoc.write(data);
+		// 			newDoc.close();
+		// 		}
 
-			});
-		}
+		// 	});
+		// }
 	</script>
 
 </head>
@@ -96,7 +96,8 @@
 	foreach ($computer_array as $temp){	//number of computer
 		echo "<tr>";
 		//echo "<td>".$temp->computerid."</td>";
-		echo "<td onclick='send(".$temp->computerid.")'>".$temp->name."</td>";
+		//echo "<td onclick='send(".$temp->computerid.")'>".$temp->name."</td>";
+		echo "<td><a href='detail_computer.php?name=".$temp->name."'>".$temp->name."</a></td>";
 		echo "<td>".$temp->model."</td>";
 		echo "<td>".$temp->ram."</td>";
 
