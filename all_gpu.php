@@ -55,15 +55,15 @@
 		$gpu_array[$line[0]] = $temp; 
 	}
 
-	echo "<table id='hor-minimalist-b'>";
+	echo "<table id='hor-minimalist-b'><thead>";
 	echo "<tr>
-		<td>Name</td>
-		<td>GPU clock</td>
-		<td>Bandwidth</td>
-		<td>Memclock</td>
-		<td>Passmark 2D score</td>
-		<td>Passmark 3D score</td>
-	</tr>";
+		<th>Name</th>
+		<th>GPU clock</th>
+		<th>Bandwidth</th>
+		<th>Memclock</th>
+		<th>Passmark 2D score</th>
+		<th>Passmark 3D score</th>
+	</tr></thead><tbody>";
 
 	foreach ($gpu_array as $temp){
 		echo "<tr>";
@@ -80,7 +80,7 @@
 	}
 
 
-	echo "</table>\n";
+	echo "</tbody></table>\n";
 
 	// Free resultset
 	pg_free_result($result);
@@ -88,6 +88,12 @@
 	// Closing connection
 	pg_close($dbconn);
 	?>
+
+	<script>
+	$(document).ready(function(){ 
+		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+	});
+	</script>
 
 </body>
 </html>

@@ -83,15 +83,15 @@
 		array_push($computer_array, $temp);
 	}
 
-	echo "<table id='hor-minimalist-b'>";
+	echo "<table id='hor-minimalist-b'><thead>";
 	echo "<tr>
-			<td></td>
-			<td>Model</td>
-			<td>RAM</td>
-			<td>CPU</td>
-			<td>GPU</td>
-			<td>Passmark total score</td>
-		</tr>";
+			<th></th>
+			<th>Model</th>
+			<th>RAM</th>
+			<th>CPU</th>
+			<th>GPU</th>
+			<th>Passmark total score</th>
+		</tr></thead><tbody>";
 
 	foreach ($computer_array as $temp){	//number of computer
 		echo "<tr>";
@@ -125,7 +125,7 @@
 		echo "</tr>";
 	}
 
-	echo "</table>\n";
+	echo "</tbody></table>\n";
 
 	// Free resultset
 	pg_free_result($result);
@@ -156,5 +156,10 @@
 		// });
 	</script>
 
+	<script>
+	$(document).ready(function(){ 
+		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+	});
+	</script>
 </body>
 </html>

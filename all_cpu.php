@@ -39,26 +39,26 @@
 		$cpu_array[$line[0]] = $temp; 
 	}
 
-	echo "<table id='hor-minimalist-b'>";
+	echo "<table id='hor-minimalist-b'><thead>";
 	echo "<tr>
-		<td>Name</td>
-		<td>Code name</td>
-		<td>Technology</td>
-		<td>Package</td>
-		<td>Clock</td>
-		<td>Clock turbo</td>
-		<td>L1 Cache</td>
-		<td>L2 Cache</td>
-		<td>L3 Cache</td>
+		<th>Name</th>
+		<th>Code name</th>
+		<th>Technology</th>
+		<th>Package</th>
+		<th>Clock</th>
+		<th>Clock turbo</th>
+		<th>L1 Cache</th>
+		<th>L2 Cache</th>
+		<th>L3 Cache</th>
 		
-		<td>Core</td>
-		<td>Thread</td>
+		<th>Core</th>
+		<th>Thread</th>
 
-		<td>Multiplier</td>
-		<td>Instructions</td>
+		<th>Multiplier</th>
+		<th>Instructions</th>
 
-		<td>Passmark score</td>
-	</tr>";
+		<th>Passmark score</th>
+	</tr></thead><tbody>";
 
 	foreach ($cpu_array as $temp){
 		echo "<tr>";
@@ -85,7 +85,7 @@
 	}
 
 
-	echo "</table>\n";
+	echo "</tbody></table>\n";
 
 	// Free resultset
 	pg_free_result($result);
@@ -93,6 +93,12 @@
 	// Closing connection
 	pg_close($dbconn);
 	?>
+
+	<script>
+	$(document).ready(function(){ 
+		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+	});
+	</script>
 
 </body>
 </html>
