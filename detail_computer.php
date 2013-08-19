@@ -42,10 +42,12 @@
 
 
 		<script>
+			//make the tabs viewable onclick
 			document.getElementById('mainimage').setAttribute('src', 'images/'+ getParameterByName('name') + '/cpuz_1_cpu.jpg');
 		</script>
 
 		<?php
+			//get the info for this computer
 			include 'dbConnection.php';
 			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 			$query = "SELECT * FROM comdb.computer WHERE name = '".$_GET["name"]."';";
@@ -66,10 +68,10 @@
 			<p>CPU: <?php echo $lineCPU[1];?></p>
 			<p>RAM: <?php echo $line[3];?></p>
 			<p>GPU: <?php echo $lineGPU[1];?></p>
+			<button type="button" class="btn btn-default" name='submit' onclick="location.href='edit_computer.php?computerid=<?php echo $line[0];?>';">Edit</button>
 		</div>
 		
 	</div>
-
 
 	<div style="height:auto;background-color:#162726;">
 
