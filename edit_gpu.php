@@ -23,7 +23,7 @@
 		<?php
 			include 'dbConnection.php';
 			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
-			$query = "SELECT * FROM comdb.gpu WHERE gpuid = ".$_POST['gpuid'].";";
+			$query = "SELECT * FROM comdb.gpu WHERE gpuid = ".$_GET['gpuid'].";";
 			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 			$line = pg_fetch_array($result);
 		?>

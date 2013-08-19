@@ -9,23 +9,6 @@
 	<script src="js/jquery-1.9.1.js"></script> 
 	<script src="js/jquery.tablesorter.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<script>
-		function send(gpuid){
-			$.ajax({
-				type: 'POST',
-				dataType: 'html',
-				url: 'edit_gpu.php',
-				data: {gpuid: gpuid},
-				success: function(data){
-					// Replace the whole body with the new HTML page
-					var newDoc = document.open('text/html', 'replace');
-					newDoc.write(data);
-					newDoc.close();
-				}
-
-			});
-		}
-	</script>
 </head>
 <body>
 	<?php include 'topbar.php'; ?>
@@ -68,7 +51,7 @@
 	foreach ($gpu_array as $temp){
 		echo "<tr>";
 		//echo "<td>".$temp->gpuid."</td>";
-		echo "<td onclick='send(".$temp->gpuid.")'>".$temp->name."</td>";
+		echo "<td> <a href='edit_gpu.php?gpuid=".$temp->gpuid."'>".$temp->name."</a></td>";
 		echo "<td>".$temp->gpuclock."</td>";
 		echo "<td>".$temp->bandwidth."</td>";
 		echo "<td>".$temp->memclock."</td>";
