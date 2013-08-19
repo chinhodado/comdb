@@ -16,7 +16,7 @@
 	<div id="chart_container" style="width:100%; height:400px;"></div>
 	<script>
 		$(function () {
-			$('#container').highcharts({
+			$('#chart_container').highcharts({
 				chart: {
 					type: 'bar'
 				},
