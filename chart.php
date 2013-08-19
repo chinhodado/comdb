@@ -104,8 +104,8 @@
 
 				//firat select box				
 				foreach ($computer_array as $temp){
-					if(isset($computer1)&&$computer1->computerid==$temp->computerid&&$temp->computerid!=5) echo "<option value=".$temp->computerid." selected='selected'>".$temp->name."</option>\n";
-					else if($temp->computerid!=5) echo "<option value=".$temp->computerid.">".$temp->name."</option>\n";
+					if(isset($computer1)&&$computer1->computerid==$temp->computerid) echo "<option value=".$temp->computerid." selected='selected'>".$temp->name."</option>\n";
+					else echo "<option value=".$temp->computerid.">".$temp->name."</option>\n";
 				}
 				?>
 				</select>
@@ -119,8 +119,8 @@
 				<?php
 				//second select box
 				foreach ($computer_array as $temp){
-					if(isset($computer2)&&$computer2->computerid==$temp->computerid&&$temp->computerid!=5) echo "<option value=".$temp->computerid." selected='selected'>".$temp->name."</option>\n";
-					else if($temp->computerid!=5) echo "<option value=".$temp->computerid.">".$temp->name."</option>\n";
+					if(isset($computer2)&&$computer2->computerid==$temp->computerid) echo "<option value=".$temp->computerid." selected='selected'>".$temp->name."</option>\n";
+					else echo "<option value=".$temp->computerid.">".$temp->name."</option>\n";
 				}?>
 				</select>
 			</div>
