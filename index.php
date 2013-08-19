@@ -17,13 +17,14 @@
 
 	<br/><br/><br/><br/>
 
-	<a href="all_cpu.php">View CPU list</a><br/>
-	<a href="all_computer.php">View computer list</a><br/>
-	<br/>
-	<a href="add_cpu.php">Add CPU</a><br/>
-	<a href="add_computer.php">Add computer</a><br/>
-	<br/>
-	<a href="chart.php">View chart</a>
+	<div class="container">
+		<h1>comdb</h1>
+		<p>a place to record my various computers over the years</p>
+		<p>
+		  <a href="all_computer.php">View computer list</a>
+		</p>
+		
+	</div>
 
 </body>
 </html>

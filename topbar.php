@@ -5,7 +5,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a href="../" class="navbar-brand">comdb</a>
+    <a href="index.php" class="navbar-brand">comdb</a>
     <div class="nav-collapse collapse bs-navbar-collapse">
       <ul class="nav navbar-nav">
 
