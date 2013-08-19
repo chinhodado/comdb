@@ -34,27 +34,45 @@
 	</script>
 	
 </head>
-<body style="padding-top: 50px;">
+<body style="padding-top: 50px;background-color:#162726;">
 	<?php include 'topbar.php'; ?>
-	<div style="height:410px;background-color:#162d42;">
+	<div style="height:490px;background-color:#162d42;">
+		<img style="float:right;" id="gpuimage">
 		<img style="float:right;" onclick="change(event, getParameterByName('name'))" id="mainimage">
+
 
 		<script>
 			document.getElementById('mainimage').setAttribute('src', 'images/'+ getParameterByName('name') + '/cpuz_1_cpu.jpg');
 		</script>
 
+		<?php
+			include 'dbConnection.php';
+			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+			$query = "SELECT * FROM comdb.computer WHERE name = '".$_GET["name"]."';";
+			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+			$line = pg_fetch_array($result);
+
+			$queryCPU = "SELECT * FROM comdb.cpu WHERE cpuid = '".$line[1]."';";
+			$resultCPU = pg_query($queryCPU) or die('Query failed: ' . pg_last_error());
+			$lineCPU = pg_fetch_array($resultCPU);
+
+			$queryGPU = "SELECT * FROM comdb.gpu WHERE gpuid = '".$line[2]."';";
+			$resultGPU = pg_query($queryGPU) or die('Query failed: ' . pg_last_error());
+			$lineGPU = pg_fetch_array($resultGPU);
+		?>
 		<div style="color:#BBDAF9; padding-top: 50px; padding-left: 50px;">
-			<p>Name: Tsubasa</p>
-			<p>CPU: amd c60</p>
-			<p>Ram: something</p>
-			<p>gpu; something</p>
+			<p>Name: <?php echo $line[6];?></p>
+			<p>Model: <?php echo $line[8];?></p>
+			<p>CPU: <?php echo $lineCPU[1];?></p>
+			<p>RAM: <?php echo $line[3];?></p>
+			<p>GPU: <?php echo $lineGPU[1];?></p>
 		</div>
 		
 	</div>
 
 
 	<div style="height:auto;background-color:#162726;">
-		<img id="gpuimage">
+
 	</div>
 	<script>
 		document.getElementById('gpuimage').setAttribute('src', 'images/'+ getParameterByName('name') + '/gpuz.jpg');
