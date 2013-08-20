@@ -22,6 +22,7 @@
 			<ul class="dropdown-menu">
 				<li><a href="all_cpu.php">CPU list</a></li>
 				<li><a href="add_cpu.php">Add new CPU</a></li>
+        <li><a href="chart_allcpu.php">CPU score chart</a></li>
 			</ul>
 		</li>
 
