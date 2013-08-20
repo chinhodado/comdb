@@ -192,6 +192,17 @@
 			var myChart1 = new Chart(ctx1).Radar(data1, {scaleOverlay:true, scaleOverride:true, scaleSteps:10, scaleStepWidth:10, scaleStartValue:0});
 			var myChart2 = new Chart(ctx2).Radar(data2, {scaleOverlay:true, scaleOverride:true, scaleSteps:10, scaleStepWidth:10, scaleStartValue:0});
 		</script>
+
+		<script>
+			// sort the 2 computer select boxes
+			$("#computerid1").html($("#computerid1 option").sort(function (a, b) {
+				return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+			}))
+
+			$("#computerid2").html($("#computerid2 option").sort(function (a, b) {
+				return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+			}))
+		</script>
 	
 	</div>
 </body>

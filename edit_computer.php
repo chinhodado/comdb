@@ -70,7 +70,7 @@
 								$query = "SELECT * FROM comdb.cpu";
 								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-								echo "<select name='cpuid' class='form-control'>";
+								echo "<select name='cpuid' id='cpuid' class='form-control'>";
 								while ($line2 = pg_fetch_array($result)) {
 									if ($line2[0]==$line[1]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
 									else echo "<option value=".$line2[0].">".$line2[1]."</option>";
@@ -85,8 +85,8 @@
 								<?php
 								$query = "SELECT * FROM comdb.gpu";
 								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-								echo "<select name='gpuid' class='form-control'>";
-								// echo "<option value='0'></option>";
+								echo "<select name='gpuid' id='gpuid' class='form-control'>";
+
 								while ($line2 = pg_fetch_array($result)) {
 									if ($line2[0]==$line[2]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
 									else echo "<option value=".$line2[0].">".$line2[1]."</option>";
@@ -124,5 +124,16 @@
 			</fieldset>
 		</form>		
 	</div>
+
+	<script>
+		// sort the CPU Select box
+		$("#cpuid").html($("#cpuid option").sort(function (a, b) {
+			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+		}))
+		// sort the GPU Select box
+		$("#gpuid").html($("#gpuid option").sort(function (a, b) {
+			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+		}))
+	</script>
 </body>
 </html>

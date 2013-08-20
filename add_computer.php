@@ -10,7 +10,6 @@
 	<script src="js/jquery-1.9.1.js"></script> 
 	<script src="js/jquery.tablesorter.js"></script>
 	<script src="js/bootstrap.js"></script>
-
 </head>
 <body>
 	<?php include 'topbar.php'; ?>
@@ -81,7 +80,7 @@
 								<?php
 								$query = "SELECT * FROM comdb.gpu";
 								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-								echo "<select name='gpuid' class='form-control'>";
+								echo "<select name='gpuid' id='gpuid' class='form-control'>";
 								// echo "<option value='0'></option>";
 								while ($line2 = pg_fetch_array($result)) {
 									echo "<option value=".$line2[0].">".$line2[1]."</option>";
@@ -155,6 +154,16 @@
 			pg_close($dbconn);
 		}
 		?>
+	<script>
+		// sort the CPU Select box
+		$("#cpuid").html($("#cpuid option").sort(function (a, b) {
+			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+		}))
+		// sort the GPU Select box
+		$("#gpuid").html($("#gpuid option").sort(function (a, b) {
+			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+		}))
+	</script>
 		
 	</div>
 </body>
