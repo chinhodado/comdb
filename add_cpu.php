@@ -132,56 +132,32 @@
 		</form>
 	</div>
 
-			<?php
-			if (array_key_exists('submit', $_POST))
-			{
-				include 'dbConnection.php';
+	<?php
+	if (array_key_exists('submit', $_POST))
+	{
+		include 'dbConnection.php';
 
-				// Establish the connection
-				$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+		// Establish the connection
+		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 
-				// Performing SQL query
-				$query = "INSERT INTO comdb.cpu(technology, name, package, clock, clockturbo, l1cache, l2cache, l3cache, numcore, passmarkscore, codename, instructions, multiplier, numthread) VALUES('";
-					$query .= $_POST['technology'];
-					$query .= "', '";
-					$query .= $_POST['cpuname'];
-					$query .= "', '";
-					$query .= $_POST['package'];
-					$query .= "', ";
-					$query .= $_POST['clock'];
-					$query .= ", '";
-					$query .= $_POST['clockturbo'];
-					$query .= "', '";
-					$query .= $_POST['l1cache'];
-					$query .= "', '";
-					$query .= $_POST['l2cache'];
-					$query .= "', '";
-					$query .= $_POST['l3cache'];
-					$query .= "', ";
-					$query .= $_POST['numcore'];
-					$query .= ", ";
-					$query .= $_POST['passmarkscore'];
-					$query .= ", '";
-					$query .= $_POST['codename'];
-					$query .= "', '";
-					$query .= $_POST['instructions'];
-					$query .= "', '";
-					$query .= $_POST['multiplier'];
-					$query .= "', ";
-					$query .= $_POST['numthread'];
-					$query .= ");";
+		// Prepare a query for execution
+		$result = pg_prepare($dbconn, "my_query", 'INSERT INTO comdb.cpu(technology, name, package, clock, clockturbo, l1cache, l2cache, l3cache, numcore, passmarkscore, codename, instructions, multiplier, numthread) 
+													VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)');
 
-					$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+		// Execute the prepared query.
+		$result = pg_execute($dbconn, "my_query", array($_POST['technology'], $_POST['cpuname'], $_POST['package'], $_POST['clock'], $_POST['clockturbo'], $_POST['l1cache'],
+														$_POST['l2cache'], $_POST['l3cache'], $_POST['numcore'], $_POST['passmarkscore'], $_POST['codename'], $_POST['instructions'], 
+														$_POST['multiplier'], $_POST['numthread'])) or die('Query failed: ' . pg_last_error());
 
-					echo "<p>Inserted ".$_POST['cpuname']." into the database</p>";
+		echo "<p>Inserted ".$_POST['cpuname']." into the database</p>";
 
-								// Free resultset
-					pg_free_result($result);
+		// Free resultset
+		pg_free_result($result);
 
-								// Closing connection
-					pg_close($dbconn);
-					}
-					?>
+		// Closing connection
+		pg_close($dbconn);
+	}
+	?>
 
 </body>
 </html>

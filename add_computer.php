@@ -122,28 +122,13 @@
 			// Establish the connection
 			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 
-			// Performing SQL query
-			$query = "INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid, gpuid) VALUES('";
-			$query .= $_POST['name'];
-			$query .= "', '";
-			$query .= $_POST['model'];
-			$query .= "', '";
-			$query .= $_POST['ram'];
-			$query .= "', '";
-			$query .= $_POST['psu'];
-			$query .= "', '";
-			$query .= $_POST['passmarkdiskscore'];
-			$query .= "', '";
-			$query .= $_POST['passmarkramscore'];
-			$query .= "', '";
-			$query .= $_POST['passmarktotalscore'];
-			$query .= "', '";
-			$query .= $_POST['cpuid'];
-			$query .= "', '";
-			$query .= $_POST['gpuid'];
-			$query .= "');";
+			// Prepare a query for execution
+			$result = pg_prepare($dbconn, "my_query", 'INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid, gpuid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)');
 
-			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+			// Execute the prepared query.
+			$result = pg_execute($dbconn, "my_query", array($_POST['name'], $_POST['model'], $_POST['ram'], 
+															$_POST['psu'], $_POST['passmarkdiskscore'], $_POST['passmarkramscore'],
+															$_POST['passmarktotalscore'], $_POST['cpuid'], $_POST['gpuid'])) or die('Query failed: ' . pg_last_error());
 
 			echo "<p>Inserted ".$_POST['name']." into the database</p>";
 
@@ -154,6 +139,7 @@
 			pg_close($dbconn);
 		}
 		?>
+
 	<script>
 		// sort the CPU Select box
 		$("#cpuid").html($("#cpuid option").sort(function (a, b) {

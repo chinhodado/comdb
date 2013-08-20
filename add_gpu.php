@@ -81,40 +81,29 @@
 		</form>
 	</div>
 
-			<?php
-			if (array_key_exists('submit', $_POST))
-			{
-				include 'dbConnection.php';
+	<?php
+	if (array_key_exists('submit', $_POST))
+	{
+		include 'dbConnection.php';
 
-				// Establish the connection
-				$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+		// Establish the connection
+		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
 
-				// Performing SQL query
-				$query = "INSERT INTO comdb.gpu(name, passmarkscore2D, passmarkscore3D, gpuclock, bandwidth, memclock) VALUES('";
-					$query .= $_POST['name'];
-					$query .= "', ";
-					$query .= $_POST['passmarkscore2D'];
-					$query .= ", ";
-					$query .= $_POST['passmarkscore3D'];
-					$query .= ", '";
-					$query .= $_POST['gpuclock'];
-					$query .= "', '";
-					$query .= $_POST['bandwidth'];
-					$query .= "', '";
-					$query .= $_POST['memclock'];
-					$query .= "');";
+		// Prepare a query for execution
+		$result = pg_prepare($dbconn, "my_query", 'INSERT INTO comdb.gpu (name, passmarkscore2D, passmarkscore3D, gpuclock, bandwidth, memclock) VALUES ($1, $2, $3, $4, $5, $6)');
 
-					$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+		// Execute the prepared query.
+		$result = pg_execute($dbconn, "my_query", array($_POST['name'], $_POST['passmarkscore2D'], $_POST['passmarkscore3D'], $_POST['gpuclock'], $_POST['bandwidth'], $_POST['memclock'])) or die('Query failed: ' . pg_last_error());
 
-					echo "<p>Inserted ".$_POST['name']." into the database</p>";
+		echo "<p>Inserted ".$_POST['name']." into the database</p>";
 
-					// Free resultset
-					pg_free_result($result);
+		// Free resultset
+		pg_free_result($result);
 
-					// Closing connection
-					pg_close($dbconn);
-					}
-			?>
+		// Closing connection
+		pg_close($dbconn);
+		}
+	?>
 
 </body>
 </html>
