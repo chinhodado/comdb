@@ -50,7 +50,6 @@
 
 	foreach ($gpu_array as $temp){
 		echo "<tr>";
-		//echo "<td>".$temp->gpuid."</td>";
 		echo "<td> <a href='edit_gpu.php?gpuid=".$temp->gpuid."'>".$temp->name."</a></td>";
 		echo "<td>".$temp->gpuclock."</td>";
 		echo "<td>".$temp->bandwidth."</td>";
@@ -73,9 +72,9 @@
 	?>
 
 	<script>
-	$(document).ready(function(){ 
-		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
-	});
+		$(document).ready(function(){ 
+			$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+		});
 	</script>
 
 </body>

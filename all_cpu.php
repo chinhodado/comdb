@@ -35,7 +35,6 @@
 
 	while ($line = pg_fetch_array($result)) {
 		$temp = new CPU($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6], $line[7], $line[8], $line[9], $line[10], $line[11], $line[12], $line[13], $line[14]);
-		//array_push($cpu_array, $temp);
 		$cpu_array[$line[0]] = $temp; 
 	}
 
@@ -95,9 +94,9 @@
 	?>
 
 	<script>
-	$(document).ready(function(){ 
-		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
-	});
+		$(document).ready(function(){ 
+			$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+		});
 	</script>
 
 </body>

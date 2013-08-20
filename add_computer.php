@@ -140,16 +140,16 @@
 		}
 		?>
 
-	<script>
-		// sort the CPU Select box
-		$("#cpuid").html($("#cpuid option").sort(function (a, b) {
-			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
-		}))
-		// sort the GPU Select box
-		$("#gpuid").html($("#gpuid option").sort(function (a, b) {
-			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
-		}))
-	</script>
+		<script>
+			// sort the CPU Select box
+			$("#cpuid").html($("#cpuid option").sort(function (a, b) {
+				return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+			}))
+			// sort the GPU Select box
+			$("#gpuid").html($("#gpuid option").sort(function (a, b) {
+				return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+			}))
+		</script>
 		
 	</div>
 </body>

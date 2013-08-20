@@ -9,32 +9,14 @@
 	<script src="js/jquery-1.9.1.js"></script> 
 	<script src="js/jquery.tablesorter.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<script>
-		// function send(comid){
-		// 	$.ajax({
-		// 		type: 'POST',
-		// 		dataType: 'html',
-		// 		url: 'edit_computer.php',
-		// 		data: {comid: comid},
-		// 		success: function(data){
-		// 			// Replace the whole body with the new HTML page
-		// 			var newDoc = document.open('text/html', 'replace');
-		// 			newDoc.write(data);
-		// 			newDoc.close();
-		// 		}
-
-		// 	});
-		// }
-	</script>
 
 </head>
 <body>
-	<?php include 'topbar.php'; ?>
 
 	<br/><br/><br/><br/>
 
 	<?php
-
+	include 'topbar.php';
 	include 'dbConnection.php';
 	include 'class_def.php';
 
@@ -93,15 +75,13 @@
 			<th>Passmark total score</th>
 		</tr></thead><tbody>";
 
-	foreach ($computer_array as $temp){	//number of computer
+	foreach ($computer_array as $temp){
 		echo "<tr>";
-		//echo "<td>".$temp->computerid."</td>";
-		//echo "<td onclick='send(".$temp->computerid.")'>".$temp->name."</td>";
+
 		echo "<td><a href='detail_computer.php?name=".$temp->name."'>".$temp->name."</a></td>";
 		echo "<td>".$temp->model."</td>";
 		echo "<td>".$temp->ram."</td>";
 
-		// echo "<td style='background:#f0b746;'></td>";
 		echo "<td>".$cpu_array[$temp->cpuid]->name."</td>";
 		echo "<td>".$gpu_array[$temp->gpuid]->name."</td>";
 		// echo "<td>".$cpu_array[$temp->cpuid]->codename."</td>";
@@ -117,11 +97,11 @@
 		// echo "<td>".$cpu_array[$temp->cpuid]->multiplier."</td>";
 		// echo "<td>".$cpu_array[$temp->cpuid]->instructions."</td>";
 
-		//echo "<td>".$temp->gpuid."</td>";
+		// echo "<td>".$temp->gpuid."</td>";
 		
 		// echo "<td>".$temp->psu."</td>";
-		//echo "<td>".$temp->passmarkdiskscore."</td>";		
-		//echo "<td>".$temp->passmarkramscore."</td>";		
+		// echo "<td>".$temp->passmarkdiskscore."</td>";		
+		// echo "<td>".$temp->passmarkramscore."</td>";		
 		echo "<td>".$temp->passmarktotalscore."</td>";
 		echo "</tr>";
 	}
@@ -135,32 +115,10 @@
 	pg_close($dbconn);
 	?>
 
-	<script>//reverse the table
-		// $(document).ready(function(){
-		// 	$("table").each(function() {
-		// 		var $this = $(this);
-		// 		var newrows = [];
-		// 		$this.find("tr").each(function(){
-		// 			var i = 0;
-		// 			$(this).find("td").each(function(){
-		// 				i++;
-		// 				if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-		// 				newrows[i].append($(this));
-		// 			});
-		// 		});
-		// 		$this.find("tr").remove();
-		// 		$.each(newrows, function(){
-		// 			$this.append(this);
-		// 		});
-		// 	});
-		// 	return false;
-		// });
-	</script>
-
 	<script>
-	$(document).ready(function(){ 
-		$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
-	});
+		$(document).ready(function(){ 
+			$("#hor-minimalist-b").tablesorter({sortList: [[0,0]]});
+		});
 	</script>
 </body>
 </html>
