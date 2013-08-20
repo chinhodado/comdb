@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>CPU list chart</title>
+	<title>Passmark CPU score chart</title>
 	<link href="css/table_style.css" rel="stylesheet" />
 	<link href="css/bootstrap.css" rel="stylesheet">
 
@@ -41,7 +41,7 @@
 		$(function () {
 			$('#chart_container').highcharts({
 				chart: {type: 'bar'},
-				title: {text: 'Passmark CPU'},
+				title: {text: 'Passmark CPU score chart'},
 				xAxis: {categories: ['CPU']},
 				yAxis: {title: {text: 'Passmark score'}},
 				series: <?php echo $json_cpu_data; ?>
