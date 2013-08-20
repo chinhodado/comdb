@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Chart</title>
+	<title>Compare 2 computers</title>
 	<script type="text/javascript" src="js/Chart.js"></script>
 
 	<link href="css/table_style.css" rel="stylesheet" />
