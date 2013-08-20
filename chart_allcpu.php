@@ -6,17 +6,34 @@
 	<link href="css/table_style.css" rel="stylesheet" />
 	<link href="css/bootstrap.css" rel="stylesheet">
 
-
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://code.highcharts.com/highcharts.js"</script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="js/jquery.tablesorter.js"></script>
-	<script src="js/bootstrap.js"></script>
-
-	
+	<script src="js/bootstrap.js"></script>	
 </head>
 <body style="padding-top: 50px;">
-	<?php include 'topbar.php'; ?>
 
+	<?php
+		include 'topbar.php';
+		include 'dbConnection.php';
+		include 'class_def.php';
+
+		// Establish the connection
+		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+
+		//query and result
+		$query = "select * from comdb.cpu order by passmarkscore;";
+		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+		$cpu_array = array();//prepare an array of CPUAndScore objects
+
+		while ($line = pg_fetch_array($result)) {
+			$temp = new CPUAndScore($line[1], $line[9]);
+			array_push($cpu_array, $temp);
+		}
+
+		$json_cpu_data = json_encode($cpu_array);//turn this array into json, ready to use later
+		?>
 	
 	<div id="chart_container" style="width:100%; height:400px;"></div>
 
@@ -27,38 +44,7 @@
 				title: {text: 'Passmark CPU'},
 				xAxis: {categories: ['CPU']},
 				yAxis: {title: {text: 'Passmark score'}},
-				series: [{
-					name: 'AMD Athlon 64 X2 4200+',
-					data: [1022]
-				}, {
-					name: 'AMD Athlon 64 X2 7750 Black Edition',
-					data: [1517]
-				}, {
-					name: 'AMD C-60',
-					data: [678]
-				}, {
-					name: 'AMD Sempron 3000+',
-					data: [413]
-				}, {
-					name: 'Intel Core i5 3470T',
-					data: [4767]
-				}, {
-					name: 'Intel Core i5 480M',
-					data: [2658]
-				}, {
-					name: 'Intel Core i7 3820',
-					data: [9315]
-				}, {
-					name: 'Intel Pentium 4 3.00 GHz',
-					data: [360]
-				}, {
-					name: 'Intel Pentium III E 850 MHz',
-					data: [167]
-				}, {
-					name: 'Mobile Intel Pentium 4 M 2.00Ghz',
-					data: [91]
-				}
-				],
+				series: <?php echo $json_cpu_data; ?>
 			});
 		});
 	</script>

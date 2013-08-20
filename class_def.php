@@ -51,4 +51,14 @@
 			$this->passmarkscore3D = $passmarkscore3D; 
 		}
 	}
+
+	// for use in chart_allcpu.php
+	class CPUAndScore {
+		public $name, $data;
+		function __construct($cpuName, $cpuScore){
+			$this->name = $cpuName;
+			$this->data = array();
+			array_push($this->data, intval($cpuScore));
+		}
+	}
 ?>
