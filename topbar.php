@@ -31,6 +31,7 @@
       <ul class="dropdown-menu">
         <li><a href="all_gpu.php">GPU list</a></li>
         <li><a href="add_gpu.php">Add new GPU</a></li>
+        <li><a href="chart_allgpu.php">GPU 3D score chart</a></li>
       </ul>
     </li>
 
