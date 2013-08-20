@@ -9,8 +9,7 @@
 			$this->name = $name;
 			$this->technology = $technology;
 			$this->package = $package;
-			$this->clock = $clock;
-			$this->clockturbo = $clockturbo;
+			$this->clock = $clock;			
 			$this->l1cache = $l1cache;
 			$this->l2cache = $l2cache;
 			$this->l3cache = $l3cache;
@@ -20,6 +19,7 @@
 			$this->instructions = $instructions;
 			$this->multiplier = $multiplier;
 			$this->numthread = $numthread;
+			$this->clockturbo = $clockturbo;
 		}
 	}
 
@@ -43,12 +43,12 @@
 		public $gpuid, $name, $gpuclock, $bandwidth, $memclock, $passmarkscore2D, $passmarkscore3D;
 		function __construct($gpuid, $name, $passmarkscore2D, $passmarkscore3D, $gpuclock, $bandwidth, $memclock){
 			$this->gpuid = $gpuid;
-			$this->name = $name; 
+			$this->name = $name;
+			$this->passmarkscore2D = $passmarkscore2D; 
+			$this->passmarkscore3D = $passmarkscore3D;
 			$this->gpuclock = $gpuclock; 
 			$this->bandwidth = $bandwidth; 
 			$this->memclock = $memclock; 
-			$this->passmarkscore2D = $passmarkscore2D; 
-			$this->passmarkscore3D = $passmarkscore3D; 
 		}
 	}
 
