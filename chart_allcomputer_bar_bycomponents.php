@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>All computer charts - bar</title>
+	<title>All computer charts - Bar - Group by components</title>
 
 	<link href="css/table_style.css" rel="stylesheet" />
 	<link href="css/bootstrap.css" rel="stylesheet">
@@ -69,36 +69,21 @@
 	/////////////////////////////////////
 	// Get the max scores
 	/////////////////////////////////////
-	$arrayScoreCPU = array();
-	$arrayScore2D = array();
-	$arrayScore3D = array();
-	$arrayScoreRAM = array();
-	$arrayScoreDisk = array();
-
-	$arrayComputerName = array();
+	$arrayTotal = array();
 
 	foreach ($computer_array as $temp) {
-			array_push($arrayComputerName, $temp->name);
-
-			array_push($arrayScoreCPU, intval($cpu_array[$temp->cpuid]->passmarkscore));
-			array_push($arrayScore2D, intval($gpu_array[$temp->gpuid]->passmarkscore2D));
-			array_push($arrayScore3D, intval($gpu_array[$temp->gpuid]->passmarkscore3D));
-			array_push($arrayScoreRAM, intval($temp->passmarkramscore));
-			array_push($arrayScoreDisk, intval($temp->passmarkdiskscore));
+		array_push($arrayTotal, new NameAndData($temp->name, array(intval($cpu_array[$temp->cpuid]->passmarkscore), 
+																	intval($gpu_array[$temp->gpuid]->passmarkscore2D), 
+																	intval($gpu_array[$temp->gpuid]->passmarkscore3D), 
+																	intval($temp->passmarkramscore), 
+																	intval($temp->passmarkdiskscore))));
 	}
 
 	////////////////////////////////////////
 	// Print out the charts
 	////////////////////////////////////////
-	$arrayFinal = array();
-	array_push($arrayFinal, new NameAndData('CPU', $arrayScoreCPU));
-	array_push($arrayFinal, new NameAndData('2D', $arrayScore2D));
-	array_push($arrayFinal, new NameAndData('3D', $arrayScore3D));
-	array_push($arrayFinal, new NameAndData('RAM', $arrayScoreRAM));
-	array_push($arrayFinal, new NameAndData('Disk', $arrayScoreDisk));
 
-	$json_computerName = json_encode($arrayComputerName);
-	$json_data = json_encode($arrayFinal);
+	$json_data = json_encode($arrayTotal);
 
 	?>
 
@@ -108,8 +93,8 @@
 		$(function () {
 			$('#chart_container').highcharts({
 				chart: {type: 'bar'},
-				title: {text: 'Passmark score chart <br> All computers - Group by computer'},
-				xAxis: {categories: <?php echo $json_computerName; ?>},
+				title: {text: 'Passmark score chart <br> All computers - Group by components'},
+				xAxis: {categories: ['CPU', '2D', '3D', 'RAM', 'Disk']},
 				yAxis: {title: {text: 'Passmark score'}},
 				series: <?php echo $json_data; ?>,
 				credits: {enabled: false},

@@ -17,6 +17,9 @@
 						<li><a href="all_computer.php">Computer list</a></li>
 						<li><a href="add_computer.php">Add new computer</a></li>
 						<li><a href="compare2computers.php">Compare 2 computers</a></li>
+						<li><a href="chart_allcomputer_spider.php">All spider charts</a></li>
+						<li><a href="chart_allcomputer_bar.php">Bar chart - group by computers</a></li>
+						<li><a href="chart_allcomputer_bar_bycomponents.php">Bar chart - group by components</a></li>
 					</ul>
 				</li>
 
