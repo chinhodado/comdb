@@ -45,7 +45,9 @@
 				title: {text: 'Passmark GPU 3D score chart'},
 				xAxis: {categories: ['GPU']},
 				yAxis: {title: {text: 'Passmark 3D score'}},
-				series: <?php echo $json_cpu_data; ?>
+				series: <?php echo $json_cpu_data; ?>,
+				credits: {enabled: false},
+				plotOptions: {bar: {dataLabels: {enabled: true}}}
 			});
 		});
 	</script>

@@ -44,7 +44,9 @@
 				title: {text: 'Passmark CPU score chart'},
 				xAxis: {categories: ['CPU']},
 				yAxis: {title: {text: 'Passmark score'}},
-				series: <?php echo $json_cpu_data; ?>
+				series: <?php echo $json_cpu_data; ?>,
+				credits: {enabled: false},
+				plotOptions: {bar: {dataLabels: {enabled: true}}}
 			});
 		});
 	</script>

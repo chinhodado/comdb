@@ -61,4 +61,13 @@
 			array_push($this->data, intval($cpuScore));
 		}
 	}
+
+	//for use in chart_allcomputer_bar.php
+	class NameAndData{
+		public $name, $data;
+			function __construct($name, $data){
+			$this->name = $name;
+			$this->data = $data;
+		}
+	}
 ?>

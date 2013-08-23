@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start(); ?>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -100,33 +101,40 @@
 			array_push($computer_array, $temp);
 		}
 
+		//initialize ignore list
+		$arrayIgnore = array();
+		array_push($arrayIgnore,"IMG Beta", "IMG Alpha", "Primrose", "Asgard"); //let's try removing Beta and Alpha, by name
+
+
 		/////////////////////////////////////
 		// Get the max scores
 		/////////////////////////////////////
-		$query = "SELECT MAX(passmarkscore) from comdb.cpu;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-		$line = pg_fetch_array($result);
-		$maxCPU = $line[0];
+		$arrayScoreCPU = array();
+		$arrayScore2D = array();
+		$arrayScore3D = array();
+		$arrayScoreRAM = array();
+		$arrayScoreDisk = array();
 
-		$query = "SELECT MAX(passmarkdiskscore) from comdb.computer;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-		$line = pg_fetch_array($result);
-		$maxDisk = $line[0];
+		foreach ($computer_array as $temp) {
+			if (in_array($temp->name, $arrayIgnore)) continue;//if the name is in the ban list, skip it
+			else {//populate the score arrays
+				array_push($arrayScoreCPU, $cpu_array[$temp->cpuid]->passmarkscore);
+				array_push($arrayScore2D,$gpu_array[$temp->gpuid]->passmarkscore2D);
+				array_push($arrayScore3D,$gpu_array[$temp->gpuid]->passmarkscore3D);
+				array_push($arrayScoreRAM,$temp->passmarkramscore);
+				array_push($arrayScoreDisk,$temp->passmarkdiskscore);
+			}
+		}
 
-		$query = "SELECT MAX(passmarkramscore) from comdb.computer;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-		$line = pg_fetch_array($result);
-		$maxRAM = $line[0];
+		//now the actual max scores
+		$maxCPU = max($arrayScoreCPU);
+		$max2D = max($arrayScore2D);
+		$max3D = max($arrayScore3D);
+		$maxRAM = max($arrayScoreRAM);
+		$maxDisk = max($arrayScoreDisk);
 
-		$query = "SELECT MAX(passmarkscore2D) from comdb.gpu;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-		$line = pg_fetch_array($result);
-		$max2D = $line[0];
-
-		$query = "SELECT MAX(passmarkscore3D) from comdb.gpu;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-		$line = pg_fetch_array($result);
-		$max3D = $line[0];
+		//debug purpose
+		echo $maxCPU." ".$max2D." ".$max3D." ". $maxRAM." ".$maxDisk;
 
 		////////////////////////////////////////
 		// Print out the charts
@@ -137,6 +145,8 @@
 		echo "<script> var arrayMax = [{$maxCPU},{$max2D},{$max3D},{$maxRAM},{$maxDisk}];</script>";
 
 		foreach ($computer_array as $temp){
+			if (in_array($temp->name, $arrayIgnore)) continue;
+			else {
 			echo "<div style='float:left; margin-left:50px;'>";
 			echo "<canvas id='myChart{$counter}' width='400' height='400' ></canvas>";
 			echo "<p style='text-align:center;'> {$temp->name} </p>";
@@ -146,7 +156,7 @@
 			echo "var arrayCom = [{$cpu_array[$temp->cpuid]->passmarkscore},{$gpu_array[$temp->gpuid]->passmarkscore2D},{$gpu_array[$temp->gpuid]->passmarkscore3D},{$temp->passmarkramscore},{$temp->passmarkdiskscore}];";
 			echo "printChart('myChart{$counter}', arrayCom, arrayMax);";
 			echo "</script>";
-			$counter++;
+			$counter++;}
 		}
 
 	?>
