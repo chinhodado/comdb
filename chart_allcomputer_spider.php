@@ -103,7 +103,7 @@
 
 		//initialize ignore list
 		$arrayIgnore = array();
-		array_push($arrayIgnore,"IMG Beta", "IMG Alpha", "Primrose", "Asgard"); //let's try removing Beta and Alpha, by name
+		//array_push($arrayIgnore,"IMG Beta", "IMG Alpha", "Primrose", "Asgard"); //let's try removing Beta and Alpha, by name
 
 
 		/////////////////////////////////////
@@ -144,7 +144,7 @@
 		foreach ($computer_array as $temp){
 			if (in_array($temp->name, $arrayIgnore)) continue;
 			else {
-			echo "<div style='float:left; margin-left:50px;'>";
+			echo "<div style='float:left; margin-left:50px;height:600px;'>";
 			echo "<canvas id='myChart{$counter}' width='400' height='400' ></canvas>";
 			echo "<p style='text-align:center;'> {$temp->name} </p>";
 			echo "</div>";
