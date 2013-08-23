@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>All computer charts</title>
+	<title>All computer charts - bar</title>
 
 	<link href="css/table_style.css" rel="stylesheet" />
 	<link href="css/bootstrap.css" rel="stylesheet">
@@ -108,7 +108,7 @@
 		$(function () {
 			$('#chart_container').highcharts({
 				chart: {type: 'bar'},
-				title: {text: 'Passmark CPU score chart'},
+				title: {text: 'All computer Passmark score chart'},
 				xAxis: {categories: <?php echo $json_computerName; ?>},
 				yAxis: {title: {text: 'Passmark score'}},
 				series: <?php echo $json_data; ?>,
