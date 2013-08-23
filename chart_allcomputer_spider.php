@@ -133,9 +133,6 @@
 		$maxRAM = max($arrayScoreRAM);
 		$maxDisk = max($arrayScoreDisk);
 
-		//debug purpose
-		echo $maxCPU." ".$max2D." ".$max3D." ". $maxRAM." ".$maxDisk;
-
 		////////////////////////////////////////
 		// Print out the charts
 		////////////////////////////////////////
