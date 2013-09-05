@@ -23,6 +23,9 @@
 		<p>
 		  <a href="all_computer.php">View computer list</a>
 		</p>
+		<p>
+		  <a href="newdb.db">Download the database file</a>
+		</p>
 		
 	</div>
 

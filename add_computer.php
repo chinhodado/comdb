@@ -40,21 +40,21 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="passmarkdiskscore" class="col-lg-3 control-label">Passmark disk score</label>
+							<label for="passmark_disk_score" class="col-lg-3 control-label">Passmark disk score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarkdiskscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmark_disk_score" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="passmarkramscore" class="col-lg-3 control-label">Passmark RAM score</label>
+							<label for="passmark_ram_score" class="col-lg-3 control-label">Passmark RAM score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarkramscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmark_ram_score" placeholder="" required>
 							</div>
 						</div>		
 						<div class="form-group">
-							<label for="passmarktotalscore" class="col-lg-3 control-label">Passmark total score</label>
+							<label for="passmark_total_score" class="col-lg-3 control-label">Passmark total score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarktotalscore" placeholder="" required>
+								<input type="text" class="form-control" name="passmark_total_score" placeholder="" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -62,12 +62,11 @@
 							<div class="col-lg-5">
 								<?php
 								include 'dbConnection.php';
-								$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
-								$query = "SELECT * FROM comdb.cpu";
-								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+								$query = "SELECT * FROM cpu";
+								$result = $dbconn->query($query);
 
 								echo "<select name='cpuid' id='cpuid' class='form-control'>";
-								while ($line = pg_fetch_array($result)) {
+								while ($line = $result->fetchArray()) {
 									echo "<option value=".$line[0].">".$line[1]."</option>";
 								}
 								echo "</select><br/>";
@@ -78,11 +77,12 @@
 							<label for="cpuid" class="col-lg-3 control-label">GPU</label>
 							<div class="col-lg-5">
 								<?php
-								$query = "SELECT * FROM comdb.gpu";
-								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+								$query = "SELECT * FROM gpu";
+								$result = $dbconn->query($query);
+
 								echo "<select name='gpuid' id='gpuid' class='form-control'>";
 								// echo "<option value='0'></option>";
-								while ($line2 = pg_fetch_array($result)) {
+								while ($line2 = $result->fetchArray()) {
 									echo "<option value=".$line2[0].">".$line2[1]."</option>";
 								}
 								echo "</select><br/>";
@@ -98,12 +98,6 @@
 								<input type="text" class="form-control" name="model" placeholder="">
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="psu" class="col-lg-1 control-label">PSU</label>
-							<div class="col-lg-5">
-								<input type="text" class="form-control" name="psu" placeholder="">
-							</div>
-						</div>						
 					</div>
 				</div>
 				
@@ -119,24 +113,21 @@
 		<?php
 		if (array_key_exists('submit', $_POST))
 		{
-			// Establish the connection
-			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
-
 			// Prepare a query for execution
-			$result = pg_prepare($dbconn, "my_query", 'INSERT INTO comdb.computer(name, model, ram, psu, passmarkdiskscore, passmarkramscore, passmarktotalscore, cpuid, gpuid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)');
+			$stmt = $dbconn->prepare('INSERT INTO computer(name, model, ram, passmark_disk_score, passmark_ram_score, passmark_total_score, cpuid, gpuid) VALUES (:1, :2, :3, :4, :5, :6, :7, :8)');
+			$stmt->bindValue(':1', $_POST['name'], SQLITE3_TEXT);
+			$stmt->bindValue(':2', $_POST['model'], SQLITE3_TEXT);
+			$stmt->bindValue(':3', $_POST['ram'], SQLITE3_TEXT);
+			$stmt->bindValue(':4', $_POST['passmark_disk_score'], SQLITE3_TEXT);
+			$stmt->bindValue(':5', $_POST['passmark_ram_score'], SQLITE3_TEXT);
+			$stmt->bindValue(':6', $_POST['passmark_total_score'], SQLITE3_TEXT);
+			$stmt->bindValue(':7', $_POST['cpuid'], SQLITE3_TEXT);
+			$stmt->bindValue(':8', $_POST['gpuid'], SQLITE3_TEXT);
 
 			// Execute the prepared query.
-			$result = pg_execute($dbconn, "my_query", array($_POST['name'], $_POST['model'], $_POST['ram'], 
-															$_POST['psu'], $_POST['passmarkdiskscore'], $_POST['passmarkramscore'],
-															$_POST['passmarktotalscore'], $_POST['cpuid'], $_POST['gpuid'])) or die('Query failed: ' . pg_last_error());
+			$result = $stmt->execute();
 
 			echo "<p>Inserted ".$_POST['name']." into the database</p>";
-
-			// Free resultset
-			pg_free_result($result);
-
-			// Closing connection
-			pg_close($dbconn);
 		}
 		?>
 

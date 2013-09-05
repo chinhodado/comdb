@@ -18,22 +18,21 @@
 
 	<?php
 
-	include 'dbConnection.php';
 	include 'class_def.php';
 
 	// Establish the connection
-	$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+	include 'dbConnection.php';
 
 	//////////////////////////////////////
 	// Fetch CPU list
 	//////////////////////////////////////
 
-	$query = "select * from comdb.cpu;";
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$query = "select * from cpu;";
+	$result = $dbconn->query($query);
 
 	$cpu_array = array();
 
-	while ($line = pg_fetch_array($result)) {
+	while ($line = $result->fetchArray()) {
 		$temp = new CPU($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6], $line[7], $line[8], $line[9], $line[10], $line[11], $line[12], $line[13], $line[14]);
 		$cpu_array[$line[0]] = $temp; 
 	}
@@ -86,11 +85,6 @@
 
 	echo "</tbody></table>\n";
 
-	// Free resultset
-	pg_free_result($result);
-
-	// Closing connection
-	pg_close($dbconn);
 	?>
 
 	<script>

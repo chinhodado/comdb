@@ -135,27 +135,32 @@
 	<?php
 	if (array_key_exists('submit', $_POST))
 	{
+		// Establish the connection
 		include 'dbConnection.php';
 
-		// Establish the connection
-		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
-
 		// Prepare a query for execution
-		$result = pg_prepare($dbconn, "my_query", 'INSERT INTO comdb.cpu(technology, name, package, clock, clockturbo, l1cache, l2cache, l3cache, numcore, passmarkscore, codename, instructions, multiplier, numthread) 
-													VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)');
+		$stmt = $dbconn->prepare('INSERT INTO cpu(technology, name, package, clock, clockturbo, l1cache, l2cache, l3cache, numcore, passmarkscore, codename, instructions, multiplier, numthread) 
+													VALUES (:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14)');
+		$stmt->bindValue(':1', $_POST['technology']);
+		$stmt->bindValue(':2', $_POST['cpuname']);
+		$stmt->bindValue(':3', $_POST['package']);
+		$stmt->bindValue(':4', $_POST['clock']);
+		$stmt->bindValue(':5', $_POST['clockturbo']);
+		$stmt->bindValue(':6', $_POST['l1cache']);
+		$stmt->bindValue(':7', $_POST['l2cache']);
+		$stmt->bindValue(':8', $_POST['l3cache']);
+		$stmt->bindValue(':9', $_POST['numcore']);
+		$stmt->bindValue(':10', $_POST['passmarkscore']);
+		$stmt->bindValue(':11', $_POST['codename']);
+		$stmt->bindValue(':12', $_POST['instructions']);
+		$stmt->bindValue(':13', $_POST['multiplier']);
+		$stmt->bindValue(':14', $_POST['numthread']);
 
 		// Execute the prepared query.
-		$result = pg_execute($dbconn, "my_query", array($_POST['technology'], $_POST['cpuname'], $_POST['package'], $_POST['clock'], $_POST['clockturbo'], $_POST['l1cache'],
-														$_POST['l2cache'], $_POST['l3cache'], $_POST['numcore'], $_POST['passmarkscore'], $_POST['codename'], $_POST['instructions'], 
-														$_POST['multiplier'], $_POST['numthread'])) or die('Query failed: ' . pg_last_error());
+		$result = $stmt->execute();
 
 		echo "<p>Inserted ".$_POST['cpuname']." into the database</p>";
 
-		// Free resultset
-		pg_free_result($result);
-
-		// Closing connection
-		pg_close($dbconn);
 	}
 	?>
 

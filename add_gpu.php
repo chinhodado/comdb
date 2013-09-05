@@ -98,7 +98,7 @@
 		$stmt->bindValue(':6', $_POST['memclock'], SQLITE3_TEXT);
 
 		// Execute the prepared query.
-		$result = $stmt->execute();		
+		$result = $stmt->execute();
 
 		echo "<p>Inserted ".$_POST['name']." into the database</p>";
 		}

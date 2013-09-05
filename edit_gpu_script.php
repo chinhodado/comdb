@@ -1,28 +1,24 @@
 <?php
 if (array_key_exists('submit', $_POST))
 {
-	include 'dbConnection.php';
 	// Establish the connection
-	$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+	include 'dbConnection.php';	
 
 	// Performing SQL query
-	$query = "UPDATE comdb.gpu SET name='".$_POST['name']."', 
-										gpuclock='".$_POST['gpuclock']."', 
-										bandwidth='".$_POST['bandwidth']."', 
-										memclock='".$_POST['memclock']."', 
-										passmarkscore2D=".$_POST['passmarkscore2D'].", 
-										passmarkscore3D=".$_POST['passmarkscore3D']." 
-			WHERE gpuid={$_POST['gpuid']}";
+	$stmt = $dbconn->prepare("UPDATE gpu SET name=:1, gpuclock=:2, bandwidth=:3, memclock=:4, passmarkscore2D=:5, passmarkscore3D=:6 
+			WHERE gpuid=:7");
 
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$stmt->bindValue(':1', $_POST['name']);
+	$stmt->bindValue(':2', $_POST['gpuclock']);
+	$stmt->bindValue(':3', $_POST['bandwidth']);
+	$stmt->bindValue(':4', $_POST['memclock']);
+	$stmt->bindValue(':5', $_POST['passmarkscore2D']);
+	$stmt->bindValue(':6', $_POST['passmarkscore3D']);
+	$stmt->bindValue(':7', $_POST['gpuid']);
+
+	$result = $stmt->execute();
 
 	echo "<p>Updated ".$_POST['name']."'s info</p>";
-
-	// Free resultset
-	pg_free_result($result);
-
-	// Closing connection
-	pg_close($dbconn);
 
 	//return to allcom page
 	header( 'Location: all_gpu.php' ) ;

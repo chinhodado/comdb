@@ -15,19 +15,18 @@
 
 	<?php
 		include 'topbar.php';
-		include 'dbConnection.php';
 		include 'class_def.php';
 
 		// Establish the connection
-		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+		include 'dbConnection.php';
 
 		//query and result
-		$query = "select * from comdb.gpu order by passmarkscore3D;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+		$query = "select * from gpu order by passmarkscore3D;";
+		$result = $dbconn->query($query);
 
 		$gpu_array = array();//prepare an array of CPUAndScore objects
 
-		while ($line = pg_fetch_array($result)) {
+		while ($line = $result->fetchArray()) {
 			//reuse the CPUAndScore class definition, since it's the same for the job. Might need to change the class name later
 			$temp = new CPUAndScore($line[1], $line[3]);//$line[1] is GPU name, $line[3] is the Passmark 3D score
 			array_push($gpu_array, $temp);

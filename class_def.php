@@ -24,18 +24,17 @@
 	}
 
 	class Computer{
-		public $computerid, $cpuid, $gpuid, $ram, $psu, $passmarkdiskscore, $name, $passmarkramscore, $model, $passmarktotalscore;
-		function __construct($computerid, $cpuid, $gpuid, $ram, $psu, $passmarkdiskscore, $name, $passmarkramscore, $model, $passmarktotalscore){
-			$this->computerid = $computerid;							//0
-			$this->cpuid = $cpuid; 										//1
-			$this->gpuid = $gpuid; 										//2
-			$this->ram = $ram; 											//3
-			$this->psu = $psu; 											//4
-			$this->passmarkdiskscore = $passmarkdiskscore; 				//5
-			$this->name = $name; 										//6
-			$this->passmarkramscore = $passmarkramscore; 				//7
-			$this->model = $model;										//8
-			$this->passmarktotalscore = $passmarktotalscore;			//9
+		public $passmark_total_score, $passmark_ram_score, $passmark_disk_score, $model, $gpuid, $cpuid, $ram, $computerid, $name;
+		function __construct($passmark_total_score, $passmark_ram_score, $passmark_disk_score, $model, $gpuid, $cpuid, $ram, $computerid, $name){
+			$this->passmark_total_score = $passmark_total_score;		//0
+			$this->passmark_ram_score = $passmark_ram_score; 			//1
+			$this->passmark_disk_score = $passmark_disk_score; 			//2
+			$this->model = $model;										//3
+			$this->gpuid = $gpuid; 										//4
+			$this->cpuid = $cpuid; 										//5
+			$this->ram = $ram; 											//6
+			$this->computerid = $computerid;							//7			
+			$this->name = $name; 										//8
 		}
 	}
 

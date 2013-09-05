@@ -1,31 +1,26 @@
 <?php
 if (array_key_exists('submit', $_POST))
-{
-	include 'dbConnection.php';
+{	
 	// Establish the connection
-	$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+	include 'dbConnection.php';
 
 	// Performing SQL query
-	$query = "UPDATE comdb.computer SET name='".$_POST['name']."', 
-										model='".$_POST['model']."', 
-										ram='".$_POST['ram']."', 
-										psu='".$_POST['psu']."', 
-										passmarkdiskscore='".$_POST['passmarkdiskscore']."', 
-										passmarkramscore='".$_POST['passmarkramscore']."', 
-										passmarktotalscore='".$_POST['passmarktotalscore']."', 
-										cpuid='".$_POST['cpuid']."',
-										gpuid='".$_POST['gpuid']."'
-			WHERE computerid={$_POST['computerid']}";
+	$stmt = $dbconn->prepare("UPDATE computer SET name=:1, model=:2, ram=:3, passmark_disk_score=:4, passmark_ram_score=:5, passmark_total_score=:6, cpuid=:7, gpuid=:8
+			WHERE computerid=:9");
 
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$stmt->bindValue(':1', $_POST['name']);
+	$stmt->bindValue(':2', $_POST['model']);
+	$stmt->bindValue(':3', $_POST['ram']);
+	$stmt->bindValue(':4', $_POST['passmark_disk_score']);
+	$stmt->bindValue(':5', $_POST['passmark_ram_score']);
+	$stmt->bindValue(':6', $_POST['passmark_total_score']);
+	$stmt->bindValue(':7', $_POST['cpuid']);
+	$stmt->bindValue(':8', $_POST['gpuid']);
+	$stmt->bindValue(':9', $_POST['computerid']);
+
+	$result = $stmt->execute();
 
 	echo "<p>Updated ".$_POST['name']."'s info</p>";
-
-	// Free resultset
-	pg_free_result($result);
-
-	// Closing connection
-	pg_close($dbconn);
 
 	//return to allcom page
 	header( 'Location: all_computer.php' ) ;

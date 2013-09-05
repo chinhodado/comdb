@@ -22,10 +22,11 @@
 	
 		<?php
 			include 'dbConnection.php';
-			$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
-			$query = "SELECT * FROM comdb.computer WHERE computerid = ".$_GET['computerid'].";";
-			$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-			$line = pg_fetch_array($result);
+			$stmt = $dbconn->prepare("SELECT * FROM computer WHERE computerid = :1");
+			$stmt->bindValue(':1', $_GET['computerid']);
+
+			$result = $stmt->execute();
+			$line = $result->fetchArray();
 		?>
 
 		<form action="edit_com.php" method="POST" style="font-size:14px;line-height:20px;" class="form-horizontal">
@@ -36,43 +37,43 @@
 						<div class="form-group">
 							<label for="name" class="col-lg-3 control-label">Computer name</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="name" value="<?php echo $line[6];?>" required>
+								<input type="text" class="form-control" name="name" value="<?php echo $line[8];?>" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="ram" class="col-lg-3 control-label">RAM</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="ram" value="<?php echo $line[3];?>" required>
+								<input type="text" class="form-control" name="ram" value="<?php echo $line[6];?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="passmarkdiskscore" class="col-lg-3 control-label">Passmark disk score</label>
+							<label for="passmark_disk_score" class="col-lg-3 control-label">Passmark disk score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarkdiskscore" value="<?php echo $line[5];?>" required>
+								<input type="text" class="form-control" name="passmark_disk_score" value="<?php echo $line[2];?>" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="passmarkramscore" class="col-lg-3 control-label">Passmark RAM score</label>
+							<label for="passmark_ram_score" class="col-lg-3 control-label">Passmark RAM score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarkramscore" value="<?php echo $line[7];?>" required>
+								<input type="text" class="form-control" name="passmark_ram_score" value="<?php echo $line[1];?>" required>
 							</div>
 						</div>		
 						<div class="form-group">
-							<label for="passmarktotalscore" class="col-lg-3 control-label">Passmark total score</label>
+							<label for="passmark_total_score" class="col-lg-3 control-label">Passmark total score</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="passmarktotalscore" value="<?php echo $line[9];?>" required>
+								<input type="text" class="form-control" name="passmark_total_score" value="<?php echo $line[0];?>" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="cpuid" class="col-lg-3 control-label">CPU</label>
 							<div class="col-lg-5">
 								<?php
-								$query = "SELECT * FROM comdb.cpu";
-								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+								$query = "SELECT * FROM cpu";
+								$result = $dbconn->query($query);
 
 								echo "<select name='cpuid' id='cpuid' class='form-control'>";
-								while ($line2 = pg_fetch_array($result)) {
-									if ($line2[0]==$line[1]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
+								while ($line2 = $result->fetchArray()) {
+									if ($line2[0]==$line[5]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
 									else echo "<option value=".$line2[0].">".$line2[1]."</option>";
 								}
 								echo "</select><br/>";
@@ -83,12 +84,12 @@
 							<label for="cpuid" class="col-lg-3 control-label">GPU</label>
 							<div class="col-lg-5">
 								<?php
-								$query = "SELECT * FROM comdb.gpu";
-								$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-								echo "<select name='gpuid' id='gpuid' class='form-control'>";
+								$query = "SELECT * FROM gpu";
+								$result = $dbconn->query($query);
 
-								while ($line2 = pg_fetch_array($result)) {
-									if ($line2[0]==$line[2]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
+								echo "<select name='gpuid' id='gpuid' class='form-control'>";
+								while ($line2 = $result->fetchArray()) {
+									if ($line2[0]==$line[4]) echo "<option selected value=".$line2[0].">".$line2[1]."</option>";
 									else echo "<option value=".$line2[0].">".$line2[1]."</option>";
 								}
 								echo "</select><br/>";
@@ -101,13 +102,7 @@
 						<div class="form-group">
 							<label for="model" class="col-lg-1 control-label">Model</label>
 							<div class="col-lg-5">
-								<input type="text" class="form-control" name="model" value="<?php echo $line[8];?>">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="psu" class="col-lg-1 control-label">PSU</label>
-							<div class="col-lg-5">
-								<input type="text" class="form-control" name="psu" value="<?php echo $line[4];?>">
+								<input type="text" class="form-control" name="model" value="<?php echo $line[3];?>">
 							</div>
 						</div>
 					</div>
@@ -119,7 +114,7 @@
 					</div>
 				</div>
 
-				<input hidden type="text" id="computerid" name="computerid" value="<?php echo $line[0];?>"/>
+				<input hidden type="text" id="computerid" name="computerid" value="<?php echo $line[7];?>"/>
 
 			</fieldset>
 		</form>		

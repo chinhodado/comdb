@@ -15,19 +15,18 @@
 
 	<?php
 		include 'topbar.php';
-		include 'dbConnection.php';
 		include 'class_def.php';
 
 		// Establish the connection
-		$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+		include 'dbConnection.php';
 
 		//query and result
-		$query = "select * from comdb.cpu order by passmarkscore;";
-		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+		$query = "select * from cpu order by passmarkscore;";
+		$result = $dbconn->query($query);
 
 		$cpu_array = array();//prepare an array of CPUAndScore objects
 
-		while ($line = pg_fetch_array($result)) {
+		while ($line = $result->fetchArray()) {
 			$temp = new CPUAndScore($line[1], $line[9]);//$line[1] is CPU name, $line[9] is the Passmark score
 			array_push($cpu_array, $temp);
 		}

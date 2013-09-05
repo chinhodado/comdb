@@ -21,22 +21,21 @@
       
 	<?php
 
-	include 'dbConnection.php';
 	include 'class_def.php';
 
 	// Establish the connection
-	$dbconn = pg_connect(pg_connection_string_from_database_url()) or die('Could not connect: ' . pg_last_error());
+	include 'dbConnection.php';
 
 	//////////////////////////////////////
 	// Fetch CPU list
 	//////////////////////////////////////
 
-	$query = "select * from comdb.cpu;";
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$query = "select * from cpu;";
+	$result = $dbconn->query($query);
 
 	$cpu_array = array();
 
-	while ($line = pg_fetch_array($result)) {
+	while ($line = $result->fetchArray()) {
 		$temp = new CPU($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6], $line[7], $line[8], $line[9], $line[10], $line[11], $line[12], $line[13], $line[14]);
 		$cpu_array[$line[0]] = $temp; 
 	}
@@ -46,12 +45,12 @@
 	// Fetch GPU list
 	//////////////////////////////////////
 
-	$query = "select * from comdb.gpu;";
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$query = "select * from gpu;";
+	$result = $dbconn->query($query);
 
 	$gpu_array = array();
 
-	while ($line = pg_fetch_array($result)) {
+	while ($line = $result->fetchArray()) {
 		$temp = new GPU($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6]);
 		$gpu_array[$line[0]] = $temp; 
 	}
@@ -60,15 +59,14 @@
 	// Fetch computer list
 	//////////////////////////////////////
 
-	$query = "select * from comdb.computer;";
-	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$query = "select * from computer;";
+	$result = $dbconn->query($query);
 
 	$computer_array = array();
 
-	while ($line = pg_fetch_array($result)) {
-		$temp = new Computer($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6], $line[7], $line[8], $line[9]);
-		$computer_array[$line[0]] = $temp; 
-		//array_push($computer_array, $temp);
+	while ($line = $result->fetchArray()) {
+		$temp = new Computer($line[0], $line[1], $line[2], $line[3], $line[4], $line[5], $line[6], $line[7], $line[8]);
+		$computer_array[$line[7]] = $temp;  //$line[7] is the computerid
 	}
 
 	//////////////////////////////////////
@@ -83,8 +81,8 @@
 		$gpu1 = $gpu_array[$computer1->gpuid];
 		$gpu2 = $gpu_array[$computer2->gpuid];
 		echo "<script>";
-		echo "var array1=[".$cpu1->passmarkscore.",".$gpu1->passmarkscore2D.",".$gpu1->passmarkscore3D.",".$computer1->passmarkramscore.",".$computer1->passmarkdiskscore."];";
-		echo "var array2=[".$cpu2->passmarkscore.",".$gpu2->passmarkscore2D.",".$gpu2->passmarkscore3D.",".$computer2->passmarkramscore.",".$computer2->passmarkdiskscore."];";
+		echo "var array1=[".$cpu1->passmarkscore.",".$gpu1->passmarkscore2D.",".$gpu1->passmarkscore3D.",".$computer1->passmark_ram_score.",".$computer1->passmark_disk_score."];";
+		echo "var array2=[".$cpu2->passmarkscore.",".$gpu2->passmarkscore2D.",".$gpu2->passmarkscore3D.",".$computer2->passmark_ram_score.",".$computer2->passmark_disk_score."];";
 		echo "</script>";
 	}?>
 
@@ -128,14 +126,6 @@
 			<button type='submit' name='submit' class='btn btn-default'>Go</button>
 		</div>
 	</form>
-
-	<?php
-	// Free resultset
-	pg_free_result($result);
-
-	// Closing connection
-	pg_close($dbconn);
-	?>
 
 		<div class="row">
 			<div class='col-lg-4'>				
